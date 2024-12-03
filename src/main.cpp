@@ -34,9 +34,31 @@ void your_turn(char board[9], Player player)
     board[choice - 1] = player.symbol;
 }
 
-void ia_turn(char board[9], Player ia)
+// Tour de l'IA
+void ia_turn(char board[9], Player ia, char opponent_symbol)
 {
     std::cout << "C'est au tour de " << ia.name << std::endl;
+
+    // Vérifier les possibilités de blocage
+    for (int i = 0; i < 9; i++)
+    {
+        if (board[i] == '.') // Si la case est vide
+        {
+            // Simuler un coup de l'adversaire
+            board[i] = opponent_symbol;
+            if (victory(board, opponent_symbol))
+            {
+                // Bloquer si l'adversaire gagne
+                board[i] = ia.symbol;
+                std::cout << ia.name << " bloque la case " << (i + 1) << std::endl;
+                return;
+            }
+            // Annuler la simulation
+            board[i] = '.';
+        }
+    }
+
+    // Si aucun blocage n'est nécessaire, choisir une case aléatoire
     int choice;
     do
     {
@@ -48,31 +70,23 @@ void ia_turn(char board[9], Player ia)
 
 int main()
 {
-
     srand(time(0));
     int mode = menu();
 
-    // création des joueurs
+    // Création des joueurs
     Player player1 = create_player();
     Player player2;
 
     if (mode == 1)
     {
-        Player player2 = create_player();
+        player2 = create_player(); // Supprimé la redéclaration redondante
         std::cout << "Joueur 1 : " << player1.name << " joue avec " << player1.symbol << std::endl;
         std::cout << "Joueur 2 : " << player2.name << " joue avec " << player2.symbol << std::endl;
     }
     else
     {
         player2.name = "IA";
-        if (player1.symbol == 'X')
-        {
-            player2.symbol = 'O';
-        }
-        else
-        {
-            player2.symbol = 'X';
-        }
+        player2.symbol = (player1.symbol == 'X') ? 'O' : 'X';
 
         std::cout << "Joueur 1 : " << player1.name << " joue avec " << player1.symbol << std::endl;
         std::cout << "IA : " << player2.name << " joue avec " << player2.symbol << std::endl;
@@ -87,12 +101,15 @@ int main()
     {
         std::cout << "C'est au tour de " << current_player.name << std::endl;
 
-        if (mode == 2 && current_player.name == "IA") {
-            ia_turn(board, current_player);
-        } else {
+        if (mode == 2 && current_player.name == "IA")
+        {
+            ia_turn(board, player2, player1.symbol); // Passer le symbole de l'adversaire
+        }
+        else
+        {
             your_turn(board, current_player);
         }
-        
+
         draw_game_board(board);
 
         if (victory(board, current_player.symbol))
@@ -100,15 +117,15 @@ int main()
             std::cout << current_player.name << " a gagné !" << std::endl;
             return 0;
         }
-        if (current_player.symbol == player1.symbol)
-        {
+
+        if (current_player.symbol == player1.symbol) {
             current_player = player2;
         }
-        else
-        {
+        else {
             current_player = player1;
         }
     }
+
     std::cout << "Match nul" << std::endl;
     return 0;
 }
