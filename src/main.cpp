@@ -34,52 +34,48 @@ void your_turn(char board[9], Player player)
     board[choice - 1] = player.symbol;
 }
 
-// Tour de l'IA
+// tour de l'IA
 void ia_turn(char board[9], Player ia, char opponent_symbol)
 {
     std::cout << "C'est au tour de " << ia.name << std::endl;
 
-    // Vérifier les possibilités de blocage
     for (int i = 0; i < 9; i++)
     {
-        if (board[i] == '.') // Si la case est vide
+        if (board[i] == '.') 
         {
-            // Simuler un coup de l'adversaire
             board[i] = opponent_symbol;
             if (victory(board, opponent_symbol))
             {
-                // Bloquer si l'adversaire gagne
                 board[i] = ia.symbol;
-                std::cout << ia.name << " bloque la case " << (i + 1) << std::endl;
+                std::cout << ia.name << " joue sur la case " << (i + 1) << std::endl;
                 return;
             }
-            // Annuler la simulation
             board[i] = '.';
         }
     }
 
-    // Si aucun blocage n'est nécessaire, choisir une case aléatoire
     int choice;
     do
     {
         choice = rand() % 9;
     } while (board[choice] != '.');
     board[choice] = ia.symbol;
-    std::cout << ia.name << " a choisi la case " << (choice + 1) << std::endl;
+    std::cout << ia.name << " joue sur la case " << (choice + 1) << std::endl;
 }
 
 int main()
 {
+    std::setlocale(LC_ALL, ".65001"); // résoudre les problèmes d'affichages d'accents dans le terminal (windows)
     srand(time(0));
     int mode = menu();
 
-    // Création des joueurs
+    // création des joueurs
     Player player1 = create_player();
     Player player2;
 
     if (mode == 1)
     {
-        player2 = create_player(); // Supprimé la redéclaration redondante
+        player2 = create_player(); 
         std::cout << "Joueur 1 : " << player1.name << " joue avec " << player1.symbol << std::endl;
         std::cout << "Joueur 2 : " << player2.name << " joue avec " << player2.symbol << std::endl;
     }
@@ -103,7 +99,7 @@ int main()
 
         if (mode == 2 && current_player.name == "IA")
         {
-            ia_turn(board, player2, player1.symbol); // Passer le symbole de l'adversaire
+            ia_turn(board, player2, player1.symbol); // passer le symbole de l'adversaire
         }
         else
         {

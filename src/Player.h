@@ -4,8 +4,8 @@
 
 // On déclare mais on ne définie pas
 struct Player {
-    std::string name;
-    char symbol;
+    std::string name{};
+    char symbol{};
 };
 
 Player create_player(); 

@@ -17,7 +17,6 @@ bool victory(const char board[9], char symbol)
         return true;
     }
 
-    // Vérification des colonnes
     if ((board[0] == board[3] && board[3] == board[6] && board[6] == symbol)
         ||(board[1] == board[4] && board[4] == board[7] && board[7] == symbol)
         ||(board[2] == board[5] && board[5] == board[8] && board[8] == symbol))
@@ -25,7 +24,6 @@ bool victory(const char board[9], char symbol)
         return true;
     }
 
-    // Vérification des diagonales
     if ((board[0] == board[4] && board[4] == board[8] && board[8] == symbol) 
        || (board[2] == board[4] && board[4] == board[6] && board[6] == symbol))
     {
