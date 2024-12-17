@@ -41,7 +41,7 @@ void ia_turn(char board[9], Player ia, char opponent_symbol)
 
     for (int i = 0; i < 9; i++)
     {
-        if (board[i] == '.') 
+        if (board[i] == '.')
         {
             board[i] = opponent_symbol;
             if (victory(board, opponent_symbol))
@@ -75,7 +75,7 @@ int main()
 
     if (mode == 1)
     {
-        player2 = create_player(); 
+        player2 = create_player();
         std::cout << "Joueur 1 : " << player1.name << " joue avec " << player1.symbol << std::endl;
         std::cout << "Joueur 2 : " << player2.name << " joue avec " << player2.symbol << std::endl;
     }
@@ -114,10 +114,12 @@ int main()
             return 0;
         }
 
-        if (current_player.symbol == player1.symbol) {
+        if (current_player.symbol == player1.symbol)
+        {
             current_player = player2;
         }
-        else {
+        else
+        {
             current_player = player1;
         }
     }

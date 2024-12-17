@@ -1,6 +1,7 @@
 #include "Plateau.h"
 #include <iostream>
 
+// fonction pour construire le plateau
 void draw_game_board(const char board[])
 {
     std::cout << "| " << board[0] << " | " << board[1] << " | " << board[2] << " | " << std::endl;
@@ -8,6 +9,7 @@ void draw_game_board(const char board[])
     std::cout << "| " << board[6] << " | " << board[7] << " | " << board[8] << " | " << std::endl;
 }
 
+// les combinaisons de condition de victoire
 bool victory(const char board[9], char symbol)
 {
     if ((board[0] == board[1] && board[1] == board[2] && board[2] == symbol) 
